@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vip.xiaomi.mapper.ShopCarMapper">
+  <resultMap id="BaseResultMap" type="com.vip.xiaomi.domain.entity.ShopCar">
+    <!--@mbg.generated-->
+    <id column="car_id" jdbcType="INTEGER" property="carId" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="oid" jdbcType="INTEGER" property="oid" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+
+<!--    <collection property="shopId" resultMap="com.vip.xiaomi.mapper.ShopMapper.ResultMapById">-->
+
+<!--    </collection>-->
+  </resultMap>
+  <select id="findShopCat" resultMap="BaseResultMap">
+    select *
+    from shopcar s
+    where status=1
+  </select>
+  <select id="findByUid" resultMap="BaseResultMap">
+    select c.shop_id, c.car_id, c.number, c.uid, c.oid,
+        s.shop_id,s.shop_name,s.shop_msg,s.original_price,s.promote_price,s.stock,s.cate_id,s.title
+    from shopcar c
+        left join shop s on c.shop_id = s.shop_id
+    where c.status = 1 and s.status = 1 and c.uid = #{uid}
+  </select>
+  <insert id="addShopCar">
+    insert into shopcar (shop_id)
+    values (#{ShopId})
+  </insert>
+    <update id="updateShopCar">
+        update shopcar
+        set
+        <if test="op !=null and op == 1">
+            number += 1
+        </if>
+         <if test="op !=null and op == 2">
+             number -= 1
+         </if>
+         where shop_id = #{shopId}
+    </update>
+
+</mapper>

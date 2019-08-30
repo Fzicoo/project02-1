@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vip.xiaomi.mapper.UserMapper">
+  <resultMap id="loginResultMap" type="com.vip.xiaomi.domain.entity.User">
+    <!--@mbg.generated-->
+    <id column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="creat_date" jdbcType="TIMESTAMP" property="creatDate" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+  </resultMap>
+  <select id="login" resultMap="loginResultMap">
+    select u.uid,u.username,u.password
+    from user u
+    where u.username = #{name} and u.status=1
+  </select>
+  <insert id="regist">
+    insert into user (username,password)
+    values (#{username},#{password})
+  </insert>
+
+
+</mapper>
